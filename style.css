@@ -22,6 +22,15 @@ body {
     margin-top: 40px;
 }
 
+.form__count-mess {
+    font-family: sans-serif;
+    letter-spacing: 1px;
+    font-size: 16px;
+    margin: 0 0 0 0;
+    color: rgb(173, 173, 173); 
+    margin-top: 40px;
+}
+
 .all__count {
     font-size: 50px;
 }
@@ -33,7 +42,11 @@ body {
 .btn__form {
     font-size: 30px;
     padding: 10px 40px 10px 40px;
-    
+}
+
+.form__button-finish {
+    font-size: 30px;
+    padding: 10px 40px 10px 40px;
 }
 
 .form__input, 
