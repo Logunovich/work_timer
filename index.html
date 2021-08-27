@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Сам себе корректор</title>
+</head>
+<body>
+    <form class="form">
+
+        <h1 class="form__title">Сколько времени ты учишься JS?</h1>
+
+        <div class="form__group">
+            
+          <div class="form__count">Сегодня занимался: <span id="hours-today">0h</span> <span id="minutes-today">0m</span> <span id="seconds-today">0s</span></div>
+        </div>
+          <div>
+          </div>
+        <div class="btn__group">
+            <button class="form__button-start btn__form">Start</button>
+            <button class="form__button-pause btn__form">Pause</button>
+        </div>
+        <div class="form__count all__count">Всего занимался: <span id="hours-all">0h</span> <span id="minutes-all">0m</span></div>
+    </form>
+    <script src="script.js"></script>
+</body>
+</html>
