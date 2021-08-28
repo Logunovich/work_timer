@@ -20,7 +20,7 @@ updTodayTime(+localStorage.getItem('allSeconds'));
 updAllTime(+localStorage.getItem('allTime'));
 
 function updAllTime (sec) {
-    let showTime = {
+    let showTime = {    
         minutes: Math.floor(sec/60)%60,
         hours: Math.floor(sec/3600)
     };
@@ -107,7 +107,7 @@ btnFinish.addEventListener('click', (e) => {
 })
 
 
-localStorage.setItem('allTime', 269800); // записываем какой-то ключ
+// localStorage.setItem('allTime', 269800); // записываем какой-то ключ
 
 // localStorage.getItem('number'); // получаем какой-то ключ
 
