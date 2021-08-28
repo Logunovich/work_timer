@@ -13,9 +13,17 @@ const btnStart = document.querySelector('.form__button-start'),
       films = document.querySelector('#films');
 
 let myTime,
-    isPause = true;
+    isPause = !localStorage.getItem('pause');
+    console.log(localStorage.getItem('pause'))
 
-btnPause.style.cssText = 'background-color: #b3eac0';
+if (localStorage.getItem('pause') == 'true') {
+    btnStart.textContent = 'Start';
+} else {
+    btnStart.textContent = 'Stop';
+    timer();
+}
+
+// btnPause.style.cssText = 'background-color: #b3eac0';
 updTodayTime(+localStorage.getItem('allSeconds'));
 updAllTime(+localStorage.getItem('allTime'));
 
@@ -41,6 +49,7 @@ function updAllTime (sec) {
 }
 
 function updTodayTime (sec) {
+    console.log()
     let showTime = {
         seconds: sec%60,
         minutes: Math.floor(sec/60)%60,
@@ -72,30 +81,41 @@ function timer () {
 
     btnStart.addEventListener('click', (e) => {
         e.preventDefault(); 
-        btnStart.style.cssText = 'background-color: #b3eac0';
-        btnPause.style.cssText = '';
-        if (isPause) {
-            isPause = false;
+        if (localStorage.getItem('pause') == 'true') {
             timer();
-    }  
+            btnStart.textContent = 'Stop';
+            localStorage.setItem('pause', false);
+        } else {
+            localStorage.setItem('pause', true);
+            btnStart.textContent = 'Start';
+            clearInterval(myTime);
+        }  
+
+
+
+
+
+            // btnStart.style.cssText = 'background-color: #b3eac0';
+        // btnPause.style.cssText = '';
 });
 
-    btnPause.addEventListener('click', (e) => {
-        e.preventDefault(); 
-        btnStart.style.cssText = '';
-        btnPause.style.cssText = 'background-color: #b3eac0';
-        if (!isPause) {
-            clearInterval(myTime);
-            isPause = true;
-    }
-});
+//     btnPause.addEventListener('click', (e) => {
+//         e.preventDefault(); 
+//         btnStart.style.cssText = '';
+//         btnPause.style.cssText = 'background-color: #b3eac0';
+//         if (!isPause) {
+//             clearInterval(myTime);
+//             isPause = true;
+//     }
+// });
 
 btnFinish.addEventListener('click', (e) => {
     e.preventDefault();
     clearInterval(myTime);
-    isPause = true;
-    btnStart.style.cssText = '';
-    btnPause.style.cssText = 'background-color: #b3eac0';
+    localStorage.setItem('pause', true);
+    btnStart.textContent = 'Start';
+    // btnStart.style.cssText = '';
+    // btnPause.style.cssText = 'background-color: #b3eac0';
 
     let finalTime = +localStorage.getItem('allTime') + +localStorage.getItem('allSeconds');
 
