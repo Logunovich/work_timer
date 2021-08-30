@@ -13,9 +13,12 @@ const btnStart = document.querySelector('.form__button-start'),
       films = document.querySelector('#films');
 
 let myTime,
-    isPause = !localStorage.getItem('pause');
-    console.log(localStorage.getItem('pause'))
-
+    isPause = !localStorage.getItem('pause'),
+    learningTime,
+    dateNow,
+    oldTime = +localStorage.getItem('oldTime');
+console.log('oldTime - ' + oldTime)
+console.log('learningTime - ' + learningTime)
 if (localStorage.getItem('pause') == 'true') {
     btnStart.textContent = 'Start';
 } else {
@@ -24,7 +27,7 @@ if (localStorage.getItem('pause') == 'true') {
 }
 
 // btnPause.style.cssText = 'background-color: #b3eac0';
-updTodayTime(+localStorage.getItem('allSeconds'));
+updTodayTime(+localStorage.getItem('today'));
 updAllTime(+localStorage.getItem('allTime'));
 
 function updAllTime (sec) {
@@ -72,22 +75,27 @@ function updTodayTime (sec) {
     secondsToday.textContent = `${showTime.seconds}`;
 }
 
-function timer () {
+function timer (curTime = +localStorage.getItem('dataNow')) {
     myTime = setInterval(() => {
-        localStorage.setItem('allSeconds', +(localStorage.getItem('allSeconds')) + 1);
-        updTodayTime(+localStorage.getItem('allSeconds'));
+        learningTime = Math.floor((Date.now() - curTime) / 1000) + oldTime;
+        localStorage.setItem('today', learningTime);
+        updTodayTime(learningTime);
     }, 1000);
 }
 
     btnStart.addEventListener('click', (e) => {
         e.preventDefault(); 
         if (localStorage.getItem('pause') == 'true') {
-            timer();
+            timer(Date.now());
+            dateNow = Date.now();
+            localStorage.setItem('dataNow', dateNow)
             btnStart.textContent = 'Stop';
             localStorage.setItem('pause', false);
         } else {
             localStorage.setItem('pause', true);
             btnStart.textContent = 'Start';
+            localStorage.setItem('oldTime', learningTime);
+            oldTime = +localStorage.getItem('oldTime');
             clearInterval(myTime);
         }  
 
@@ -117,17 +125,18 @@ btnFinish.addEventListener('click', (e) => {
     // btnStart.style.cssText = '';
     // btnPause.style.cssText = 'background-color: #b3eac0';
 
-    let finalTime = +localStorage.getItem('allTime') + +localStorage.getItem('allSeconds');
+    let finalTime = +localStorage.getItem('allTime') + +localStorage.getItem('today');
 
     localStorage.setItem('allTime', finalTime);
-    localStorage.setItem('allSeconds', 0);
+    localStorage.setItem('today', 0);
+    oldTime = 0;
     
-    updTodayTime(+localStorage.getItem('allSeconds'));
+    updTodayTime(+localStorage.getItem('today'));
     updAllTime(+localStorage.getItem('allTime'));
 })
 
 
-// localStorage.setItem('allTime', 269800); // записываем какой-то ключ
+// localStorage.setItem('oldTime', 0); // записываем какой-то ключ
 
 // localStorage.getItem('number'); // получаем какой-то ключ
 
