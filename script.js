@@ -1,9 +1,8 @@
 'use strict';
 
-// Ver 1.1 commit: Logunovich Denis (logunovich@gmail.com)
+// Ver 2.1 commit: Logunovich Denis (logunovich@gmail.com)
 
 const btnStart = document.querySelector('.form__button-start'),
-      btnPause = document.querySelector('.form__button-pause'),
       btnFinish = document.querySelector('.form__button-finish'), 
       hoursToday = document.querySelector('#hours-today'),
       minutesToday = document.querySelector('#minutes-today'),
@@ -13,12 +12,13 @@ const btnStart = document.querySelector('.form__button-start'),
       films = document.querySelector('#films');
 
 let myTime,
-    isPause = !localStorage.getItem('pause'),
     learningTime,
-    dateNow,
     oldTime = +localStorage.getItem('oldTime');
-console.log('oldTime - ' + oldTime)
-console.log('learningTime - ' + learningTime)
+
+    if (!learningTime) {
+        learningTime = localStorage.getItem('today')
+    }
+
 if (localStorage.getItem('pause') == 'true') {
     btnStart.textContent = 'Start';
 } else {
@@ -26,7 +26,6 @@ if (localStorage.getItem('pause') == 'true') {
     timer();
 }
 
-// btnPause.style.cssText = 'background-color: #b3eac0';
 updTodayTime(+localStorage.getItem('today'));
 updAllTime(+localStorage.getItem('allTime'));
 
@@ -87,10 +86,10 @@ function timer (curTime = +localStorage.getItem('dataNow')) {
         e.preventDefault(); 
         if (localStorage.getItem('pause') == 'true') {
             timer(Date.now());
-            dateNow = Date.now();
-            localStorage.setItem('dataNow', dateNow)
-            btnStart.textContent = 'Stop';
+            localStorage.setItem('dataNow', Date.now())
             localStorage.setItem('pause', false);
+            btnStart.textContent = 'Stop';
+            oldTime = +localStorage.getItem('oldTime');
         } else {
             localStorage.setItem('pause', true);
             btnStart.textContent = 'Start';
@@ -98,48 +97,29 @@ function timer (curTime = +localStorage.getItem('dataNow')) {
             oldTime = +localStorage.getItem('oldTime');
             clearInterval(myTime);
         }  
-
-
-
-
-
-            // btnStart.style.cssText = 'background-color: #b3eac0';
-        // btnPause.style.cssText = '';
 });
-
-//     btnPause.addEventListener('click', (e) => {
-//         e.preventDefault(); 
-//         btnStart.style.cssText = '';
-//         btnPause.style.cssText = 'background-color: #b3eac0';
-//         if (!isPause) {
-//             clearInterval(myTime);
-//             isPause = true;
-//     }
-// });
 
 btnFinish.addEventListener('click', (e) => {
     e.preventDefault();
     clearInterval(myTime);
-    localStorage.setItem('pause', true);
     btnStart.textContent = 'Start';
-    // btnStart.style.cssText = '';
-    // btnPause.style.cssText = 'background-color: #b3eac0';
-
     let finalTime = +localStorage.getItem('allTime') + +localStorage.getItem('today');
-
+    localStorage.setItem('pause', true);
     localStorage.setItem('allTime', finalTime);
     localStorage.setItem('today', 0);
+    localStorage.setItem('oldTime', 0);
     oldTime = 0;
+    learningTime = 0;
     
     updTodayTime(+localStorage.getItem('today'));
     updAllTime(+localStorage.getItem('allTime'));
 })
 
 
-// localStorage.setItem('oldTime', 0); // записываем какой-то ключ
+// localStorage.setItem('allTime', 561600); // записываем какой-то ключ
 
 // localStorage.getItem('number'); // получаем какой-то ключ
 
-// localStorage.removeItem('number'); // удаляем какой-то ключ
+// localStorage.removeItem('allSeconds'); // удаляем какой-то ключ
 
 // localStorage.clear(); // полностью очищаем ключи в LocalStorage
