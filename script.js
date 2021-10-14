@@ -113,10 +113,9 @@ btnFinish.addEventListener('click', (e) => {
     
     updTodayTime(+localStorage.getItem('today'));
     updAllTime(+localStorage.getItem('allTime'));
-})
+});
 
-
-localStorage.setItem('allTime', 561600); // записываем какой-то ключ
+// localStorage.setItem('allTime', 561600); // записываем какой-то ключ
 
 // localStorage.getItem('number'); // получаем какой-то ключ
 
