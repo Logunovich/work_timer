@@ -13,7 +13,7 @@ const btnStart = document.querySelector('.form__button-start'),
 
 let myTime,
     learningTime,
-    oldTime = +localStorage.getItem('oldTime');
+    oldTime = +localStorage.getItem('oldTime') || 0;
 
     if (!learningTime) {
         learningTime = localStorage.getItem('today')
@@ -74,11 +74,16 @@ function updTodayTime (sec) {
     secondsToday.textContent = `${showTime.seconds}`;
 }
 
-function timer (curTime = +localStorage.getItem('dataNow')) {
+function timer (curTime = +localStorage.getItem('dataNow') || Date.now()) {
     myTime = setInterval(() => {
         learningTime = Math.floor((Date.now() - curTime) / 1000) + oldTime;
         localStorage.setItem('today', learningTime);
         updTodayTime(learningTime);
+
+
+        console.log('oldTime - ' + oldTime);
+        console.log('curTime - ' + curTime);
+        console.log('learningTime - ' + learningTime);
     }, 1000);
 }
 
