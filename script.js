@@ -121,7 +121,7 @@ btnFinish.addEventListener('click', (e) => {
 });
 
 
-// localStorage.setItem('allTime', 561600); // записываем какой-то ключ
+localStorage.setItem('allTime', 720000); // записываем какой-то ключ
 
 // localStorage.getItem('number'); // получаем какой-то ключ
 
